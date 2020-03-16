@@ -1,46 +1,32 @@
-
+// creates Router from express
 const router = require("express").Router();
-const helper = require("./userHelpers")
-const validater = require("./userValidateMiddleWare")
-const handler = require("./userHandlers")
+const userHelper = require("./userHelpers")
+const postHelper = require("../posts/postHelpers")
 
-router.post('/', validater.validateUser, handler.postUserHandler );
+// validation middleware
+const {validatePost, validateUser, validateUserId}= require("./userValidateMiddleWare")
 
-router.post('/:id/posts', (req, res) => {
-  // do your magic!
-});
+// route handler middleware
+const { putUserHandler, deleteUserHandler, getUserPostsHandler, postPostHandler, postUserHandler, getUsersHandler, getUserHandler} = require("./userHandlers")
 
-router.get('/', (req, res) => {
-  // do your magic!
-});
+// get a list of all users
+router.get('/', getUsersHandler);
 
-router.get('/:id', (req, res) => {
-  // do your magic!
-});
+// Post New User
+router.post('/', validateUser, postUserHandler );
 
-router.get('/:id/posts', (req, res) => {
-  // do your magic!
-});
+// get A specific user info
+router.get('/:id', validateUserId, getUserHandler);
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
-});
-
-router.put('/:id', (req, res) => {
-  // do your magic!
-});
-
-//custom middleware
-
-function validateUserId(req, res, next) {
-  // do your magic!
-}
+// Post a New Post to User Id
+router.post('/:id/posts', validateUserId, validatePost , postPostHandler);
 
 
+router.get('/:id/posts',validateUserId, getUserPostsHandler);
 
-function validatePost(req, res, next) {
-  // do your magic!
-}
+router.delete('/:id',validateUserId, deleteUserHandler );
+
+router.put('/:id', validateUserId, validateUser, putUserHandler);
 
 
 

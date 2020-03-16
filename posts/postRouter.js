@@ -1,27 +1,19 @@
-const express = require('express');
-
+const express = require('express')
 const router = express.Router();
+const {getPostsHandler, getPostHandler, deletePostHandler, putPostHandler} = require("./postHandlers")
+const {validatePostId, validatePost} = require("./postValidateMiddleWare")
 
-router.get('/', (req, res) => {
-  // do your magic!
-});
 
-router.get('/:id', (req, res) => {
-  // do your magic!
-});
+router.get('/', getPostsHandler);
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
-});
+router.get('/:id', validatePostId, getPostHandler);
 
-router.put('/:id', (req, res) => {
-  // do your magic!
-});
+router.delete('/:id', validatePostId, deletePostHandler);
 
-// custom middleware
+router.put('/:id', validatePostId, validatePost, putPostHandler);
 
-function validatePostId(req, res, next) {
-  // do your magic!
-}
+
+
+
 
 module.exports = router;

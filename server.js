@@ -1,11 +1,13 @@
 const express = require("express");
 const userRouter = require("./users/userRouter")
+const postRouter = require("./posts/postRouter")
 
 server = express();
 server.use(express.json());
 server.use(logger);
 
 server.use("/user", userRouter)
+server.use("/post", postRouter)
 
 // testendpoint
 server.get("/", (req, res) => {
